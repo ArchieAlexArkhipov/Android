@@ -1,0 +1,81 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/card_height"
+    android:layout_gravity="center"
+    android:layout_marginStart="@dimen/fab_margin"
+    android:layout_marginEnd="@dimen/fab_margin"
+    android:layout_marginTop="@dimen/eight_dp"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="#fff"
+    android:foreground="?attr/selectableItemBackground"
+    tools:context=".DetailViewActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/fab_margin">
+
+        <ImageView
+            android:id="@+id/card_img"
+            android:layout_width="@dimen/card_img_size"
+            android:layout_height="@dimen/card_img_size"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_lemur"/>
+
+        <TextView
+            android:id="@+id/card_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/note1_date"
+            android:layout_toEndOf="@+id/card_img"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/fab_margin"/>
+
+        <TextView
+            android:id="@+id/card_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/note1_text"
+            android:layout_toEndOf="@+id/card_img"
+            android:layout_below="@+id/card_date"
+            android:layout_marginTop="@dimen/eight_dp"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:maxLines="4"
+            android:ellipsize="end"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
+
+Короче, пишу один раз и больше не повторяю
+я все таки сделал по отдельному проекту на каждое дз. я конечно бессмысленно ведь наверное тебе надо было просто гит использовать и тогда все б изменения были видны, но может пригодится. если прижмут, то сможешь по проектам полазить и поглядеть
+
+библиотеки подключаются в \app\build.gradle . я вроде подключил только две: cardview и recyclerview
+
+я не совсем уверен, что правильные настройки для отображения изображений поставил, но наверное пойдет
+
+во второй домашке я вставил пару картинок. причем сделал это прям по уму, использую средства андройд студии, поэтому картинки разбились по папкам drawable, bitmap и тд. короче, как надо
+строки и отступы я вынес в \app\src\main\res\values string.xml и dimens.xml, соответственно
+версия вьюшки для горизонтального экрана находится в папке layout-land
+
+для восьмой домашки я создал объект Note. по условию в нем должны быть параметры Date date и int drawable. такое ограничение на типы не совсем удобное для этой задачи, так что пришлось плясать от этого.
+в методе getDate я, как видишь, перевожу этот тип Date в String (бессмыслица,но такие условия).
+дальше идет класс NoteRepository. он получает тестовые данные. тут я ввел массив images, ссылающийся на картинки, из которого РАНДОМНО будут браться изображения.
+в методе initialize читается файл \app\src\main\assets\notes.txt каждая строчка - это отдельная запись. причем строчки в формате date__text. строка делится по селектору "__" и засовывается в объект Note
+
+тут важный момент, что этот метод надо вызывать при изначальной загрузке приложения. для этого введен класс App, переопределяющий onCreate приложения и в нем вызывается этот initialize. чтобы класс App заработал, я вставил строку android:name="com.learning.sample.App"  AndroidManifest.xml
+ну и дальше созданы стандартные классы NoteAdapter и NoteViewHolder. в них ничего интересного
+
+в девятой домашке я также вставил стандартные классы для горизонтального скролла.
+ну и вынес формирование основного RecyclerView в класс NotesListView
+
